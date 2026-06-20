@@ -45,7 +45,7 @@ import {
   ChevronRightIcon,
   CopyIcon,
   DownloadIcon,
-  LinkIcon,
+
   MoreHorizontalIcon,
   PencilIcon,
   RefreshCwIcon,
@@ -54,7 +54,6 @@ import {
   VolumeXIcon,
 } from "lucide-react";
 import type { FC } from "react";
-import { useState } from "react";
 
 export const Thread: FC = () => {
   return (
@@ -330,7 +329,6 @@ const AssistantActionBar: FC = () => {
       autohide="not-last"
       className="aui-assistant-action-bar-root relative z-40 -ms-1 flex items-center gap-1 text-muted-foreground opacity-100 data-[disabled]:invisible"
     >
-      <ThreadShareButton />
       <ActionBarPrimitive.Copy asChild>
         <TooltipIconButton tooltip="Copy">
           <AuiIf condition={(s) => s.message.isCopied}>
@@ -475,34 +473,6 @@ const EditComposer: FC = () => {
         </div>
       </ComposerPrimitive.Root>
     </MessagePrimitive.Root>
-  );
-};
-
-const ThreadShareButton: FC = () => {
-  const [copied, setCopied] = useState(false);
-
-  const handleShare = async () => {
-    const url = window.location.href;
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = url;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  return (
-    <TooltipIconButton tooltip="Share conversation" onClick={handleShare}>
-      {copied ? <CheckIcon className="size-4" /> : <LinkIcon className="size-4" />}
-    </TooltipIconButton>
   );
 };
 

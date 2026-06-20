@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
 import { ThemeToggle } from "../theme-toggle";
@@ -38,9 +38,7 @@ const Header = () => {
             </SignUpButton>
           </div>
         </Show>
-        <Show when="signed-in">
-          <UserButton />
-        </Show>
+
       </div>
     </header>
   );
