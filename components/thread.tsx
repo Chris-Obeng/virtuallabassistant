@@ -45,6 +45,7 @@ import {
   ChevronRightIcon,
   CopyIcon,
   DownloadIcon,
+  LinkIcon,
   MoreHorizontalIcon,
   PencilIcon,
   RefreshCwIcon,
@@ -53,6 +54,7 @@ import {
   VolumeXIcon,
 } from "lucide-react";
 import type { FC } from "react";
+import { useState } from "react";
 
 export const Thread: FC = () => {
   return (
@@ -60,8 +62,8 @@ export const Thread: FC = () => {
       className="aui-root aui-thread-root @container flex flex-1 min-h-0 flex-col bg-background overflow-hidden"
       style={{
         ["--thread-max-width" as string]: "44rem",
-        ["--composer-radius" as string]: "24px",
-        ["--composer-padding" as string]: "10px",
+        ["--composer-radius" as string]: "20px",
+        ["--composer-padding" as string]: "8px",
       }}
     >
       <ThreadPrimitive.Viewport
@@ -69,21 +71,21 @@ export const Thread: FC = () => {
         data-slot="aui_thread-viewport"
         className="relative flex flex-1 flex-col overflow-x-auto overflow-y-scroll scroll-smooth"
       >
-        <div className="mx-auto flex w-full max-w-(--thread-max-width) flex-1 flex-col px-4 pt-4">
+        <div className="mx-auto flex w-full max-w-(--thread-max-width) flex-1 flex-col px-3 sm:px-4 pt-3 sm:pt-4">
           <AuiIf condition={(s) => s.thread.isEmpty}>
             <ThreadWelcome />
           </AuiIf>
 
           <div
             data-slot="aui_message-group"
-            className="mb-10 flex flex-col gap-y-8 empty:hidden"
+            className="mb-8 sm:mb-10 flex flex-col gap-y-6 sm:gap-y-8 empty:hidden"
           >
             <ThreadPrimitive.Messages>
               {() => <ThreadMessage />}
             </ThreadPrimitive.Messages>
           </div>
 
-          <ThreadPrimitive.ViewportFooter className="aui-thread-viewport-footer sticky bottom-0 mt-auto flex flex-col gap-4 overflow-visible rounded-t-(--composer-radius) bg-background pb-4 md:pb-6">
+          <ThreadPrimitive.ViewportFooter className="aui-thread-viewport-footer sticky bottom-0 mt-auto flex flex-col gap-3 sm:gap-4 overflow-visible rounded-t-(--composer-radius) bg-background pb-3 sm:pb-6">
             <ThreadScrollToBottom />
             <Composer />
           </ThreadPrimitive.ViewportFooter>
@@ -140,7 +142,7 @@ const ThreadWelcome: FC = () => {
             height={72}
             className="rounded-2xl object-contain fade-in slide-in-from-bottom-2 animate-in fill-mode-both duration-300"
           />
-          <h1 className="aui-thread-welcome-message-inner fade-in slide-in-from-bottom-1 animate-in fill-mode-both font-semibold text-3xl sm:text-4xl duration-200 text-center tracking-tight">
+          <h1 className="aui-thread-welcome-message-inner fade-in slide-in-from-bottom-1 animate-in fill-mode-both font-semibold text-2xl sm:text-4xl duration-200 text-center tracking-tight">
             {greetingText}
           </h1>
         </div>
@@ -328,6 +330,7 @@ const AssistantActionBar: FC = () => {
       autohide="not-last"
       className="aui-assistant-action-bar-root relative z-40 -ms-1 flex items-center gap-1 text-muted-foreground opacity-100 data-[disabled]:invisible"
     >
+      <ThreadShareButton />
       <ActionBarPrimitive.Copy asChild>
         <TooltipIconButton tooltip="Copy">
           <AuiIf condition={(s) => s.message.isCopied}>
@@ -472,6 +475,34 @@ const EditComposer: FC = () => {
         </div>
       </ComposerPrimitive.Root>
     </MessagePrimitive.Root>
+  );
+};
+
+const ThreadShareButton: FC = () => {
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <TooltipIconButton tooltip="Share conversation" onClick={handleShare}>
+      {copied ? <CheckIcon className="size-4" /> : <LinkIcon className="size-4" />}
+    </TooltipIconButton>
   );
 };
 

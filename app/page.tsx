@@ -57,7 +57,7 @@ function LoadingSkeleton() {
 function LandingPage() {
   return (
     <TooltipProvider>
-      <div className="flex h-screen w-full flex-col bg-[#f5f5f7] overflow-hidden">
+      <div className="flex h-screen w-full flex-col bg-[#f5f5f7] dark:bg-black overflow-hidden">
         {/* Minimal nav bar */}
         <header className="flex items-center justify-between px-6 sm:px-10 py-4 h-14 shrink-0">
           <div className="flex items-center gap-3">
@@ -68,7 +68,7 @@ function LandingPage() {
               height={32}
               className="rounded-lg object-contain"
             />
-            <span className="font-semibold text-[15px] tracking-tight text-[#1d1d1f]">
+            <span className="font-semibold text-[15px] tracking-tight text-[#1d1d1f] dark:text-white">
               Virtual Lab Assistant
             </span>
           </div>
@@ -76,13 +76,13 @@ function LandingPage() {
             <SignInButton mode="modal">
               <Button
                 variant="ghost"
-                className="rounded-full font-medium text-sm h-9 px-5 cursor-pointer text-[#1d1d1f] hover:bg-[#e8e8ed] transition-all duration-200"
+                className="rounded-full font-medium text-sm h-9 px-5 cursor-pointer text-[#1d1d1f] dark:text-white hover:bg-[#e8e8ed] dark:hover:bg-[#2d2d2f] transition-all duration-200"
               >
                 Sign In
               </Button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <Button className="bg-[#1d1d1f] text-white hover:bg-black rounded-full font-medium text-sm h-9 px-5 shadow-sm transition-all duration-200 cursor-pointer">
+              <Button className="bg-[#1d1d1f] dark:bg-white text-white dark:text-[#1d1d1f] hover:bg-black dark:hover:bg-[#e8e8ed] rounded-full font-medium text-sm h-9 px-5 shadow-sm transition-all duration-200 cursor-pointer">
                 Sign Up
               </Button>
             </SignUpButton>
@@ -92,34 +92,34 @@ function LandingPage() {
         {/* Hero section */}
         <main className="flex flex-1 flex-col items-center justify-center px-6 text-center relative">
           {/* Subtle background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#e8e8ed]/50 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#e8e8ed]/50 dark:from-white/[0.03] via-transparent to-transparent pointer-events-none" />
 
           <div className="mx-auto max-w-2xl relative z-10">
             {/* Logo */}
             <div className="mb-8 mx-auto flex items-center justify-center">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-[#1d1d1f]/5 to-transparent rounded-3xl blur-xl" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#1d1d1f]/5 dark:from-white/10 to-transparent rounded-3xl blur-xl" />
                 <Image
                   src="/logo.png"
                   alt="Virtual Lab Assistant"
                   width={96}
                   height={96}
-                  className="rounded-[22px] object-contain relative shadow-sm"
+                  className="rounded-[22px] object-contain relative shadow-sm dark:shadow-white/5"
                 />
               </div>
             </div>
 
             {/* Headline */}
-            <h1 className="mb-4 font-bold text-[40px] sm:text-[56px] leading-[1.05] tracking-tight text-[#1d1d1f]">
+            <h1 className="mb-4 font-bold text-[40px] sm:text-[56px] leading-[1.05] tracking-tight text-[#1d1d1f] dark:text-white">
               Your Intelligent
               <br />
-              <span className="bg-gradient-to-r from-[#1d1d1f] to-[#555559] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#1d1d1f] dark:from-white to-[#555559] dark:to-[#a1a1a6] bg-clip-text text-transparent">
                 Lab Companion
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="mb-10 text-[#86868b] text-lg sm:text-xl max-w-lg mx-auto leading-relaxed font-normal">
+            <p className="mb-10 text-[#86868b] dark:text-[#98989d] text-lg sm:text-xl max-w-lg mx-auto leading-relaxed font-normal">
               An AI-powered lab assistant for electrical engineering students.
               Get measurement guidance, configure instruments, and learn lab
               procedures through natural conversation.
@@ -128,7 +128,7 @@ function LandingPage() {
             {/* CTA buttons */}
             <div className="flex items-center justify-center gap-3">
               <SignInButton mode="modal">
-                <Button className="bg-[#1d1d1f] text-white hover:bg-black rounded-full font-medium px-8 py-5 text-[15px] shadow-sm transition-all duration-200 hover:shadow-md active:scale-[0.98] cursor-pointer">
+                <Button className="bg-[#1d1d1f] dark:bg-white text-white dark:text-[#1d1d1f] hover:bg-black dark:hover:bg-[#e8e8ed] rounded-full font-medium px-8 py-5 text-[15px] shadow-sm transition-all duration-200 hover:shadow-md active:scale-[0.98] cursor-pointer">
                   Get Started
                   <svg
                     className="ml-2 size-4"
@@ -148,7 +148,7 @@ function LandingPage() {
               <SignUpButton mode="modal">
                 <Button
                   variant="outline"
-                  className="rounded-full font-medium px-8 py-5 text-[15px] border-[#d2d2d7] text-[#1d1d1f] hover:bg-[#e8e8ed] transition-all duration-200 active:scale-[0.98] cursor-pointer"
+                  className="rounded-full font-medium px-8 py-5 text-[15px] border-[#d2d2d7] dark:border-[#38383a] text-[#1d1d1f] dark:text-white hover:bg-[#e8e8ed] dark:hover:bg-[#2d2d2f] transition-all duration-200 active:scale-[0.98] cursor-pointer"
                 >
                   Create Account
                 </Button>
@@ -176,15 +176,15 @@ function LandingPage() {
               ].map((feature) => (
                 <div
                   key={feature.title}
-                  className="group rounded-2xl bg-white/70 backdrop-blur-xl border border-[#d2d2d7]/50 p-5 transition-all duration-300 hover:bg-white hover:border-[#d2d2d7] hover:shadow-sm"
+                  className="group rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-[#d2d2d7]/50 dark:border-white/10 p-5 transition-all duration-300 hover:bg-white dark:hover:bg-white/10 hover:border-[#d2d2d7] dark:hover:border-white/20 hover:shadow-sm dark:hover:shadow-white/5"
                 >
-                  <div className="mb-3 flex size-10 items-center justify-center rounded-xl bg-[#f5f5f7] group-hover:bg-[#e8e8ed] transition-colors">
-                    <feature.icon className="size-5 text-[#1d1d1f]" />
+                  <div className="mb-3 flex size-10 items-center justify-center rounded-xl bg-[#f5f5f7] dark:bg-white/10 group-hover:bg-[#e8e8ed] dark:group-hover:bg-white/20 transition-colors">
+                    <feature.icon className="size-5 text-[#1d1d1f] dark:text-white" />
                   </div>
-                  <h3 className="font-semibold text-[15px] text-[#1d1d1f] mb-1">
+                  <h3 className="font-semibold text-[15px] text-[#1d1d1f] dark:text-white mb-1">
                     {feature.title}
                   </h3>
-                  <p className="text-[13px] text-[#86868b] leading-relaxed">
+                  <p className="text-[13px] text-[#86868b] dark:text-[#98989d] leading-relaxed">
                     {feature.desc}
                   </p>
                 </div>

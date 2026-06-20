@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import Header from "@/components/custom/header";
 
 const satoshi = localFont({
   src: [
@@ -85,11 +85,19 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${satoshi.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="h-full flex flex-col">
-        <ClerkProvider>
-          {children}
-        </ClerkProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkProvider>
+            {children}
+          </ClerkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
