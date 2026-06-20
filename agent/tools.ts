@@ -17,16 +17,16 @@ const USER_AGENT =
   "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
 // ─────────────────────────────────────────────
-// Tavily client — instantiated once at module level
+// Tavily client — instantiated lazily to prevent module-level crash
+// if the env var is missing in production.
 // ─────────────────────────────────────────────
 
-if (!process.env.TAVILY_API_KEY) {
-  throw new Error("Missing required environment variable: TAVILY_API_KEY");
+function getTavilyClient(): TavilyClient {
+  if (!process.env.TAVILY_API_KEY) {
+    throw new Error("Missing required environment variable: TAVILY_API_KEY");
+  }
+  return tavily({ apiKey: process.env.TAVILY_API_KEY });
 }
-
-const tavilyClient: TavilyClient = tavily({
-  apiKey: process.env.TAVILY_API_KEY,
-});
 
 // ─────────────────────────────────────────────
 // Helpers
@@ -93,8 +93,9 @@ export const webSearchTool = tool(
     searchDepth?: "basic" | "advanced";
   }) => {
     try {
+      const client = getTavilyClient();
       const response = await withRetry(() =>
-        tavilyClient.search(query, {
+        client.search(query, {
           maxResults,
           topic,
           includeRawContent,
