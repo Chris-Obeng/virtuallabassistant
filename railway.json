@@ -1,13 +1,8 @@
 {
-  "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
     "buildCommand": "prisma generate && next build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/"
   },
   "deploy": {
-    "startCommand": "HOSTNAME=0.0.0.0 node .next/standalone/server.js",
-    "numReplicas": 1,
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 3
+    "startCommand": "HOSTNAME=0.0.0.0 node .next/standalone/server.js"
   }
 }
