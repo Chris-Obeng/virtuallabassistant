@@ -22,10 +22,6 @@ import {
 import { ToolFallback } from "@/components/tool-fallback";
 import { TooltipIconButton } from "@/components/tooltip-icon-button";
 import { Button } from "@/components/ui/button";
-import { MicButton } from "@/components/mic-button";
-import { DeepgramPlayButton } from "@/components/tts-playback";
-import { VoiceModeToggle } from "@/components/voice-mode";
-import { ThinkingIndicator, SpeakingIndicator } from "@/components/status-indicators";
 import { cn } from "@/lib/utils";
 import {
   ActionBarMorePrimitive,
@@ -87,9 +83,6 @@ export const Thread: FC = () => {
 
           <ThreadPrimitive.ViewportFooter className="aui-thread-viewport-footer sticky bottom-0 mt-auto flex flex-col gap-4 overflow-visible rounded-t-(--composer-radius) bg-background pb-4 md:pb-6">
             <ThreadScrollToBottom />
-            <ThinkingIndicator />
-            <SpeakingIndicator />
-            <VoiceModeToggle />
             <Composer />
           </ThreadPrimitive.ViewportFooter>
         </div>
@@ -203,7 +196,6 @@ const ComposerAction: FC = () => {
     <div className="aui-composer-action-wrapper relative flex items-center justify-between">
       <div className="flex items-center gap-1">
         <ComposerAddAttachment />
-        <MicButton />
       </div>
       <AuiIf condition={(s) => !s.thread.isRunning}>
         <ComposerPrimitive.Send asChild>
@@ -326,7 +318,6 @@ const AssistantActionBar: FC = () => {
       autohide="not-last"
       className="aui-assistant-action-bar-root relative z-40 -ms-1 flex items-center gap-1 text-muted-foreground opacity-100 data-[disabled]:invisible"
     >
-      <DeepgramPlayButton />
       <ActionBarPrimitive.Copy asChild>
         <TooltipIconButton tooltip="Copy">
           <AuiIf condition={(s) => s.message.isCopied}>
