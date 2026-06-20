@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
@@ -9,6 +10,14 @@ const Header = () => {
     <header className="flex justify-between items-center py-4 px-4 sm:px-6 bg-transparent h-14 shrink-0 relative z-10 w-full backdrop-blur-md"> 
       <div className="flex items-center gap-2">
         <SidebarTrigger className="text-gray-600 hover:text-black hover:bg-gray-100 transition-colors" />
+        <Image
+          src="/logo.png"
+          alt="Virtual Lab Assistant"
+          width={28}
+          height={28}
+          className="rounded-md object-contain"
+        />
+        <span className="font-semibold text-base tracking-tight hidden sm:inline">Virtual Lab Assistant</span>
       </div>
       <div className="flex items-center">
         <Show when="signed-out">

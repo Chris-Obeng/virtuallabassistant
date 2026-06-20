@@ -69,7 +69,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Virtual Lab Assistant",
-  description: "An AI assistant built with LangChain DeepAgents, Vercel AI SDK and Assistant-ui",
+  description: "An AI-powered lab companion for electrical engineering students. Get measurement guidance, configure virtual instruments, and learn lab procedures through conversation.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

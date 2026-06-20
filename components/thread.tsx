@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Show, useUser } from "@clerk/nextjs";
 import {
   ComposerAddAttachment,
@@ -22,6 +23,7 @@ import {
 import { ToolFallback } from "@/components/tool-fallback";
 import { TooltipIconButton } from "@/components/tooltip-icon-button";
 import { Button } from "@/components/ui/button";
+import { MicButton } from "@/components/mic-button";
 import { cn } from "@/lib/utils";
 import {
   ActionBarMorePrimitive,
@@ -130,7 +132,14 @@ const ThreadWelcome: FC = () => {
   return (
     <div className="aui-thread-welcome-root my-auto mx-auto flex grow flex-col">
       <div className="aui-thread-welcome-center flex w-full grow flex-col items-center justify-center">
-        <div className="aui-thread-welcome-message flex size-full flex-col justify-center px-4">
+        <div className="aui-thread-welcome-message flex size-full flex-col items-center justify-center px-4 gap-4">
+          <Image
+            src="/logo.png"
+            alt="Virtual Lab Assistant"
+            width={72}
+            height={72}
+            className="rounded-2xl object-contain fade-in slide-in-from-bottom-2 animate-in fill-mode-both duration-300"
+          />
           <h1 className="aui-thread-welcome-message-inner fade-in slide-in-from-bottom-1 animate-in fill-mode-both font-semibold text-3xl sm:text-4xl duration-200 text-center tracking-tight">
             {greetingText}
           </h1>
@@ -196,6 +205,7 @@ const ComposerAction: FC = () => {
     <div className="aui-composer-action-wrapper relative flex items-center justify-between">
       <div className="flex items-center gap-1">
         <ComposerAddAttachment />
+        <MicButton />
       </div>
       <AuiIf condition={(s) => !s.thread.isRunning}>
         <ComposerPrimitive.Send asChild>
