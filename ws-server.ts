@@ -28,7 +28,17 @@ if (!DEEPGRAM_API_KEY) {
   process.exit(1);
 }
 
-const server = createServer();
+const server = createServer((req, res) => {
+  // Respond to health checks and stray HTTP requests from Railway's proxy.
+  // Without this, Railway sees the service as unhealthy and returns 502.
+  if (req.url === "/health" || req.url === "/") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("OK");
+    return;
+  }
+  res.writeHead(426, { "Content-Type": "text/plain" });
+  res.end("Upgrade Required");
+});
 
 const wss = new WebSocketServer({ server });
 
