@@ -13,19 +13,54 @@ import {
  * Uses linear16 encoding (raw PCM) which Deepgram's WebSocket API
  * supports natively — no WebM container issues.
  */
+/**
+ * Build the WebSocket URL for the Deepgram proxy.
+ *
+ * Priority:
+ * 1. options.wsUrl (explicit override)
+ * 2. window.__VOICE_WS_URL (runtime global, set via <script> tag)
+ * 3. NEXT_PUBLIC_VOICE_WS_URL (build-time env var, inlined by Next.js)
+ * 4. Auto-detection: if served over HTTPS, derive wss://hostname:3001/ws
+ * 5. Fallback: ws://localhost:3001/ws (local dev)
+ */
+function resolveWsUrl(options?: { wsUrl?: string }): string {
+  // 1. Explicit override
+  if (options?.wsUrl) return options.wsUrl;
+
+  // 2. Runtime global (settable without rebuild)
+  if (typeof window !== "undefined" && (window as any).__VOICE_WS_URL) {
+    return (window as any).__VOICE_WS_URL;
+  }
+
+  // 3. NEXT_PUBLIC_ build-time env var
+  const publicEnvVar =
+    typeof process !== "undefined" &&
+    typeof process.env !== "undefined" &&
+    process.env.NEXT_PUBLIC_VOICE_WS_URL;
+  if (publicEnvVar) return publicEnvVar;
+
+  // 4. Local dev fallback — will fail in production with a clear connection error.
+  //     On Railway, the WebSocket proxy is a separate service at a different URL.
+  //     Set NEXT_PUBLIC_VOICE_WS_URL in Railway env vars to make it work.
+  if (
+    typeof window !== "undefined" &&
+    window.location.protocol === "https:"
+  ) {
+    console.warn(
+      "[DeepgramVoiceAdapter] Running on HTTPS but no NEXT_PUBLIC_VOICE_WS_URL set.",
+      "Voice Mode will not work. Set NEXT_PUBLIC_VOICE_WS_URL in Railway env vars.",
+    );
+  }
+
+  return "ws://localhost:3001/ws";
+}
+
 export class DeepgramVoiceAdapter implements RealtimeVoiceAdapter {
   private wsUrl: string;
 
   constructor(options: { wsUrl?: string } = {}) {
-    // NEXT_PUBLIC_VOICE_WS_URL overrides for production (Railway).
-    // Fall back to localhost for local dev.
-    this.wsUrl =
-      options.wsUrl ??
-      (typeof process !== "undefined" &&
-      typeof process.env !== "undefined" &&
-      process.env.NEXT_PUBLIC_VOICE_WS_URL
-        ? process.env.NEXT_PUBLIC_VOICE_WS_URL
-        : "ws://localhost:3001/ws");
+    this.wsUrl = resolveWsUrl(options);
+    console.log("[DeepgramVoiceAdapter] Connecting to WebSocket URL:", this.wsUrl);
   }
 
   connect(
