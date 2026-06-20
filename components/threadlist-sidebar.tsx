@@ -30,7 +30,7 @@ export function ThreadListSidebar({
                   </div>
                   <div className="aui-sidebar-header-heading me-6 flex flex-col gap-0.5 leading-none">
                     <span className="aui-sidebar-header-title font-semibold tracking-tight text-lg">
-                      DeepAgent
+                      Virtual Lab Assistant
                     </span>
                   </div>
                 </div>

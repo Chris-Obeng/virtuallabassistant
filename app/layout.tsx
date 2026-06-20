@@ -68,8 +68,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DeepAgent",
-  description: "An ai agent built with LangChain DeepAgents, Vercel ai-sdk/langchain adaptor and Assistant-ui",
+  title: "Virtual Lab Assistant",
+  description: "An AI assistant built with LangChain DeepAgents, Vercel AI SDK and Assistant-ui",
 };
 
 export default function RootLayout({

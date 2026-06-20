@@ -3,6 +3,7 @@ import { systemPrompt } from "@/agent/systemPrompt";
 import { agentMiddlewares } from "@/agent/agentMiddleware";
 import { researchSubAgentTool } from "@/agent/researchSubgent";
 import { webSearchTool, webFetchTool } from "./tools";
+import { instrumentTools } from "./instrument-tools";
 import {
   createDeepAgent,
   CompositeBackend,
@@ -20,7 +21,7 @@ export const agent = createDeepAgent({
   name: "aurelia",
   model,
   systemPrompt,
-  tools: [researchSubAgentTool, webSearchTool, webFetchTool],
+  tools: [researchSubAgentTool, webSearchTool, webFetchTool, ...instrumentTools],
   middleware: agentMiddlewares,
   backend: new CompositeBackend(new StateBackend(), {
     // persistent memory

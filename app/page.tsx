@@ -3,6 +3,8 @@
 import { Thread } from "@/components/thread";
 import { ThreadListSidebar } from "@/components/threadlist-sidebar";
 import Header from "@/components/custom/header";
+import { InstrumentConfirmationGates } from "@/components/confirmation-gate";
+import { DeepgramVoiceAdapter } from "@/lib/deepgram-voice-adapter";
 import {
   AssistantRuntimeProvider,
   useRemoteThreadListRuntime,
@@ -33,6 +35,7 @@ export default function Home() {
         }),
         adapters: {
           speech: new WebSpeechSynthesisAdapter(),
+          voice: new DeepgramVoiceAdapter(),
           attachments: new CompositeAttachmentAdapter([
             new SimpleImageAttachmentAdapter(),
             new SimpleTextAttachmentAdapter(),
@@ -45,6 +48,7 @@ export default function Home() {
   return (
     <TooltipProvider>
       <AssistantRuntimeProvider runtime={runtime}>
+        <InstrumentConfirmationGates />
         <SidebarProvider defaultOpen={false}>
           <div className="flex h-screen w-full overflow-hidden">
             <ThreadListSidebar />

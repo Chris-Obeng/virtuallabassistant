@@ -1,11 +1,17 @@
 {
   "version": 1,
   "skills": {
+    "api": {
+      "source": "deepgram/skills",
+      "sourceType": "github",
+      "skillPath": "skills/api/SKILL.md",
+      "computedHash": "165bf8e666aff0239b637a6782119090409cee751061ceed784e094c572a3c22"
+    },
     "assistant-ui": {
       "source": "assistant-ui/skills",
       "sourceType": "github",
       "skillPath": "assistant-ui/skills/assistant-ui/SKILL.md",
-      "computedHash": "82394e859e4adb795729710c36ff20c6142e7670c3fa10e40cfcdf2c5367396c"
+      "computedHash": "1447d72373f8ceedfd38a94174ea59c1b1db90ec1bcf0dd5142486adaa7e767e"
     },
     "cloud": {
       "source": "assistant-ui/skills",
@@ -24,6 +30,12 @@
       "sourceType": "github",
       "skillPath": "config/skills/deep-agents-memory/SKILL.md",
       "computedHash": "cd4f906c303a13bb740ce310a9918bbaac190150fe2e943c5c3ddea010417a69"
+    },
+    "docs": {
+      "source": "deepgram/skills",
+      "sourceType": "github",
+      "skillPath": "skills/docs/SKILL.md",
+      "computedHash": "0a30ab80eb187b9a1d35e272e6d70d1f041e73dffaf143290dbda706e18b8bc2"
     },
     "langchain-fundamentals": {
       "source": "langchain-ai/langchain-skills",
