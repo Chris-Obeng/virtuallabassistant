@@ -17,7 +17,15 @@ export class DeepgramVoiceAdapter implements RealtimeVoiceAdapter {
   private wsUrl: string;
 
   constructor(options: { wsUrl?: string } = {}) {
-    this.wsUrl = options.wsUrl ?? "ws://localhost:3001/ws";
+    // NEXT_PUBLIC_VOICE_WS_URL overrides for production (Railway).
+    // Fall back to localhost for local dev.
+    this.wsUrl =
+      options.wsUrl ??
+      (typeof process !== "undefined" &&
+      typeof process.env !== "undefined" &&
+      process.env.NEXT_PUBLIC_VOICE_WS_URL
+        ? process.env.NEXT_PUBLIC_VOICE_WS_URL
+        : "ws://localhost:3001/ws");
   }
 
   connect(

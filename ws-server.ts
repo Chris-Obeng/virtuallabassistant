@@ -17,7 +17,8 @@ import dotenv from "dotenv";
 dotenv.config();                        // reads .env
 dotenv.config({ path: ".env.local", override: true });  // .env.local takes precedence
 
-const PORT = parseInt(process.env.VOICE_WS_PORT ?? "3001", 10);
+// Railway assigns PORT automatically. Fall back to VOICE_WS_PORT for local dev.
+const PORT = parseInt(process.env.PORT || process.env.VOICE_WS_PORT || "3001", 10);
 const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY;
 
 if (!DEEPGRAM_API_KEY) {
