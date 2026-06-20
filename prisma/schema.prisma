@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ProcessedWebhook {
+  id          String   @id        // the svix-id, e.g. "msg_2xK9pL..."
+  processedAt DateTime @default(now())
+
+  @@map("processed_webhooks")
+}
+
+model User {
+  id        String   @id                    // already indexed as primary key
+  email     String   @unique               // @@unique creates an index automatically
+  name      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  threads Thread[]
+
+  @@map("users")
+}
+
+model Thread {
+  id        String   @id                   // ← NO @default — you supply this from the client
+  userId    String                          //   same value goes to LangGraph as thread_id
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@index([userId, updatedAt(sort: Desc)])
+  @@map("threads")
+}
+
+model Message {
+  id        String   @id                   // ← AI SDK generates this, you store it
+  threadId  String                          // ← foreign key to Thread.id (same value as LangGraph thread_id)
+  parentId  String?
+  format    String
+  content   Json
+  createdAt DateTime @default(now())
+
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([threadId, createdAt])
+  @@map("messages")
+}
+
